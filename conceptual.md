@@ -34,11 +34,14 @@ console.log( doSomething.prototype );
 Every JS function also inherits certain attributes and qualities from JS's default Object().prototype. We can add data and methods to our doSomething prototype by setting them using .prototype.
 
 ex: 
+
 ````
-doSomething.prototype.foo = "bar";
+doSomething.prototype.foo = "bar"
+
 ```
 
 This line will add this property to our doSomething function, as shown here:
+
 ```
 {
     foo: "bar",
