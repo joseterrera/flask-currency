@@ -37,7 +37,6 @@ ex:
 
 ````
 doSomething.prototype.foo = "bar"
-
 ```
 
 This line will add this property to our doSomething function, as shown here:
@@ -51,7 +50,6 @@ This line will add this property to our doSomething function, as shown here:
         ... // other default methods here
     }
 }
-
 ```
 
 Another thing you can do with JS, which you cannot do with Python is modify the parent object via the instance using Object.getPrototypeOf(instance), as it is done here:
@@ -89,9 +87,7 @@ let arya = new Person('Gendry')
 arya.code()
 arya.clean()
 arya.cook()
-arya.boyfriend //?
-
-
+arya.boyfriend 
 ```
 
 
