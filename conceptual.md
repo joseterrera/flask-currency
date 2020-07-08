@@ -119,9 +119,37 @@ Flask is a micro-framework, which means it has little to no dependencies to exte
 
 - What is a cookie and what kinds of things are they commonly used for?
 
+  A cookie is a small piece of data sent from the server to the browser. It remembers stateful information for the the stateless http protocol. So, for instance a browser can remember if you logged in to a site before.
+
 - What is the session object in Flask?
+  
+  Session is yet another way to store user-specific data between requests. It works similar to cookies. To use session you must set the secret key first. The session object of the flask package is used to set and get session data. The session object works like a dictionary but it can also keep track modifications.
 
 - What does Flask's `jsonify()` do?
 
+It creates a response with the JSON representation of the given arguments. This is better explained with an example.
+
+The following code:
+```
+from flask import jsonify
+
+@app.route('/_get_current_user')
+def get_current_user():
+    return jsonify(username=g.user.username,
+                   email=g.user.email,
+                   id=g.user.id)
+```
+
+Will return this:
+
+```
+{
+    "username": "admin",
+    "email": "admin@localhost",
+    "id": 42
+}
+```
+
 - What was the hardest part of this past week for you?
   What was the most interesting?
+  Hardest thing is absrobing all the new concepts. Most interesting is moving forward.
