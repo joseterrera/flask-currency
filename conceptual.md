@@ -92,6 +92,23 @@
 
 - Given a dictionary like ``{"a": 1, "b": 2}``: , list two ways you can try to get a missing key (like "c") *without* your programming crashing.
 
+  One can use the get method, which will return None if the key doesn' exist: `dict.get('student')`
+
+  Or use try/except:
+  ```py
+  try:
+    dict['student']
+  except:
+    print('This is not a key in the dictionary')
+  ```
+
+  One last thing you could do is use an if statement to check if the key exists before accessing:
+
+  ```py
+  if student in dict:
+    dict['student']
+  ```
+
 - What is a unit test?
 
   It is a method where one focus on one bit of functionality and makes sure it works.
@@ -99,57 +116,90 @@
 
 - What is an integration test?
 
-  It is a method where units that were independently depeloped are tested and made sure that they work together.
+  It is a method where units that were independently depeloped are tested and made sure that they work together. This could be testing a view function to make sure all the routing and returning works correctly.
+
 
 - What is the role of web application framework, like Flask?
 
   A web application framework provides you with tools, libraries and technologies that allow you to build a web application. This web application can be some web pages, a blog, a commercial website.
-Flask is a micro-framework, which means it has little to no dependencies to external libraries. The advantage of this is that it makes the framework light and less prone to vulnerabilities or bugs. The disadvantage is that one will have to manually add those dependencies.
+  Flask is a micro-framework, which means it has little to no dependencies to external libraries. The advantage of this is that it makes the framework light and less prone to vulnerabilities or bugs. The disadvantage is that one will have to manually add those dependencies.
 
 - You can pass information to Flask either as a parameter in a route URL
   (like '/foods/pretzel') or using a URL query param (like
   'foods?type=pretzel'). How might you choose which one is a better fit
   for an application?
 
+  There isn't an exact better way to do this but it depends on the situation. You can generally use query string parameters if you are describing the object you are on vs using the route for the object itself. For example, in the above case I would use /foods/pretzel and then use a query string parameter if I am decribing the pretzel such as /foods/pretzel?type=salty or /foods/pretzel?type=sugar.
+
+
 - How do you collect data from a URL placeholder parameter using Flask?
+
+
+You can specify the variable in the app.route and then use that variable as a paramater in the routing function. Here is an example of the pretzel:
+
+```py
+  @app.route('/foods/<food>')
+  def grocery(food):
+      x = food
+```
+
 
 - How do you collect data from the query string using Flask?
 
+  With a query string the data can be found in the request.args dictionary:
+
+  ```py
+    @app.route('/foods')
+    def grocery():
+        x = request.args.get('type')
+  ```
+
+
 - How do you collect data from the body of the request using Flask?
+
+
+  You can get the data form a post request in the body using the request.form dictionary
+
+  ```py
+    @app.route('/foods')
+    def grocery():
+        x = request.form.get('type')
+  ```
 
 - What is a cookie and what kinds of things are they commonly used for?
 
-  A cookie is a small piece of data sent from the server to the browser. It remembers stateful information for the the stateless http protocol. So, for instance a browser can remember if you logged in to a site before.
+  A cookie is a small piece of data, a key and a value, sent from the server to the browser. It remembers stateful information for the the stateless http protocol. So, for instance a browser can remember if you logged in to a site before.
 
 - What is the session object in Flask?
   
   Session is yet another way to store user-specific data between requests. It works similar to cookies. To use session you must set the secret key first. The session object of the flask package is used to set and get session data. The session object works like a dictionary but it can also keep track modifications.
 
 - What does Flask's `jsonify()` do?
+jsonify will take JSON serializeable data in python and convert it to a JSON string.
 
-It creates a response with the JSON representation of the given arguments. This is better explained with an example.
+  It creates a response with the JSON representation of the given arguments. This is better explained with an example.
 
-The following code:
-```
-from flask import jsonify
+  The following code:
+  ```
+  from flask import jsonify
 
-@app.route('/_get_current_user')
-def get_current_user():
-    return jsonify(username=g.user.username,
-                   email=g.user.email,
-                   id=g.user.id)
-```
+  @app.route('/_get_current_user')
+  def get_current_user():
+      return jsonify(username=g.user.username,
+                    email=g.user.email,
+                    id=g.user.id)
+  ```
 
-Will return this:
+  Will return this:
 
-```
-{
-    "username": "admin",
-    "email": "admin@localhost",
-    "id": 42
-}
-```
+  ```
+  {
+      "username": "admin",
+      "email": "admin@localhost",
+      "id": 42
+  }
+  ```
 
-- What was the hardest part of this past week for you?
-  What was the most interesting?
-  Hardest thing is absrobing all the new concepts. Most interesting is moving forward.
+  - What was the hardest part of this past week for you?
+    What was the most interesting?
+    Hardest thing is absrobing all the new concepts. Most interesting is moving forward.
