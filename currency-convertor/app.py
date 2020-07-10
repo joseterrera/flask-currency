@@ -9,3 +9,10 @@ app.config['SECRET_KEY'] = "secret"
 def show_form():
   """Show currency conversion form"""
   return render_template('form.html')
+
+@app.route('/conversion')
+def submit_form():
+  """Handle Form Submission"""
+  code_from = request.args['code_from'].upper()
+  code_to = request.args['code_to'].upper()
+  
