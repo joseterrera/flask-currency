@@ -1,5 +1,6 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, flash
 from flask_debugtoolbar import DebugToolbarExtension
+import currency
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = "secret"
@@ -27,5 +28,19 @@ def submit_form():
 
   if not currency.check_currency_code(code_to):
     errors.append(f"Not a valid code: {code_to}")
-
   
+  if not errors:
+    result = currency.convert_to_pretty(code_from, code_to, amt)
+    if result is None:
+      errors.append('Conversion Failed')
+
+
+  if errors:
+    for error in errors:
+      flash(err)
+    return render_template('form.html',
+                            code_from=code_from,
+                            code_to=code_to,
+                            amt=amt or "") 
+  else:
+    return render_template('results.html', result=f"{result}") 
