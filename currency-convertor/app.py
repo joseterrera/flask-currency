@@ -19,3 +19,13 @@ def submit_form():
   errors = []
 
   if amt is None:
+    errors.append("Not a valid amount.")
+
+
+  if not currency.check_currency_code(code_from):
+    errors.append(f"Not a valid code: {code_from}")
+
+  if not currency.check_currency_code(code_to):
+    errors.append(f"Not a valid code: {code_to}")
+
+  
