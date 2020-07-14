@@ -4,6 +4,20 @@ import currency
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = "secret"
+debug = DebugToolbarExtension(app)
+
+
+def safe_convert_to_float(s):
+  """Convert to float or return none
+  >>> safe_convert_to_float("1.2")
+  1.2
+  >>> safe_convert_to_float("hello") is None
+  True
+  """
+  try:
+    return float(s)
+  except ValueError:
+    return None
 
 
 @app.route('/')
@@ -11,16 +25,17 @@ def show_form():
   """Show currency conversion form"""
   return render_template('form.html')
 
-@app.route('/conversion')
+@app.route('/convert')
 def submit_form():
   """Handle Form Submission"""
   code_from = request.args['code_from'].upper()
   code_to = request.args['code_to'].upper()
+  # amt = safe_convert_to_float(request.args['amt'])
   amt = safe_convert_to_float(request.args['amt'])
   errors = []
 
   if amt is None:
-    errors.append("Not a valid amount.")
+        errs.append("Not a valid amount.")
 
 
   if not currency.check_currency_code(code_from):
@@ -43,4 +58,4 @@ def submit_form():
                             code_to=code_to,
                             amt=amt or "") 
   else:
-    return render_template('results.html', result=f"{result}") 
+    return render_template('result.html', result=f"{result}") 
