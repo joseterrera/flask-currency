@@ -1,35 +1,38 @@
-"""Functions to handle currency."""
-from forex_python.converter import CurrencyCodes, CurrencyRates, RatesNotAvailableError
+"""Functions handling currency."""
 
+from forex_python.converter import CurrencyCodes, CurrencyRates, RatesNotAvailableError
 
 rates = CurrencyRates()
 codes = CurrencyCodes()
 
 
 def check_currency_code(code):
-  """is currency code valid?
-      >>> check_currency_code("USD")
-      True
+    """Is currency code valid?
 
-      >>> check_currency_code("TEST")
-      False
-  """
+        >>> check_currency_code("USD")
+        True
 
-  return codes.get_currency_name(code) is not None
+        >>> check_currency_code("FOOBAR")
+        False
+    """
+
+    return codes.get_currency_name(code) is not None
+
 
 def convert_to_pretty(code_from, code_to, amt):
-  """Convert amt between currencies and return pretty result.
+    """Convert amt between currencies & return pretty result.
 
-  >>> convert_to_pretty('USD', 'USD', 1)
-  '$1.0'
+        >>> convert_to_pretty('USD', 'USD', 1)
+        '$ 1.0'
 
-  >>> convert_to_pretty('USD', 'USD', 1.22)
-  '$1.22'
-  """
-  try:
-      amt = f"{rates.convert(code_from, code_to, amt):.2f}"
-  except RatesNotAvailableError:
-      return None
+        >>> convert_to_pretty('USD', 'USD', 1.22)
+        '$ 1.22'
+    """
 
-  symbol = codes.get_symbol(code_to)
-  return f"{symbol} {amt}"
+    try:
+        amt = f"{rates.convert(code_from, code_to, amt):.2f}"
+    except RatesNotAvailableError:
+        return None
+
+    symbol = codes.get_symbol(code_to)
+    return f"{symbol} {amt}"

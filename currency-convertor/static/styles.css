@@ -2,6 +2,12 @@ h1 {
   margin: 2em 0 1em;
 }
 
+.alert {
+color: white;
+background-color: #de6830;
+padding: 0.75em;
+margin: 1em 0;
+display: inline-block;
 
-
+}
 
